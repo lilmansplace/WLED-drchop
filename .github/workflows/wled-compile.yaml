@@ -30,14 +30,12 @@ jobs:
         pio run
     - name: Copy Files
       run: |
-        echo "HERE"
         tree $GITHUB_WORKSPACE
         cd $GITHUB_WORKSPACE
-        echo "THERE"
+        find . -name "*.gz"
         git rm -r $GITHUB_WORKSPACE/*.bin.gz || true
         WLEDFOLDERNAME=`cat /tmp/WLEDtemp/wledfoldername`
-        find /tmp/WLEDtemp/WLED-pryor-main/build_output/firmware/
-        mkdir -p $GITHUB_WORKSPACE/build_output/firmware/
+        tree $WLEDFOLDERNAME
         cp -Rv ${WLEDFOLDERNAME}/build_output/firmware $GITHUB_WORKSPACE/build_output/
         date -I | tr -d '\n' >$GITHUB_WORKSPACE/last_update_date.txt
     - name: Commit Files
