@@ -35,14 +35,16 @@ jobs:
         cd $GITHUB_WORKSPACE
         git rm -r $GITHUB_WORKSPACE/*.bin.gz || true
         WLEDFOLDERNAME=`cat /tmp/WLEDtemp/wledfoldername`
-        cp ${WLEDFOLDERNAME}/build_output/firmware/*.bin.gz $GITHUB_WORKSPACE/
+        find /tmp/WLEDtemp/WLED-pryor-main/build_output/firmware/
+        mkdir -p $GITHUB_WORKSPACE/build_output/firmware/
+        cp -Rv ${WLEDFOLDERNAME}/build_output/firmware $GITHUB_WORKSPACE/build_output/
         date -I | tr -d '\n' >$GITHUB_WORKSPACE/last_update_date.txt
     - name: Commit Files
       run: |
         cd $GITHUB_WORKSPACE
         git config user.name "GitHub Actions Bot"
         git config user.email "<>"
-        git add $GITHUB_WORKSPACE/*.bin.gz
+        git add $GITHUB_WORKSPACE/build_output
         git add $GITHUB_WORKSPACE/last_update_date.txt
         git commit -m "Commit latest Builds"
         git push origin main
