@@ -5,7 +5,6 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
@@ -13,7 +12,6 @@ jobs:
       uses: actions/setup-python@v5
       with:
         python-version: 3.9
-
     - name: Install PlatformIO
       run: |
         python -m pip install --upgrade pip
@@ -32,7 +30,10 @@ jobs:
         pio run
     - name: Copy Files
       run: |
+        echo "HERE"
+        tree $GITHUB_WORKSPACE
         cd $GITHUB_WORKSPACE
+        echo "THERE"
         git rm -r $GITHUB_WORKSPACE/*.bin.gz || true
         WLEDFOLDERNAME=`cat /tmp/WLEDtemp/wledfoldername`
         find /tmp/WLEDtemp/WLED-pryor-main/build_output/firmware/
